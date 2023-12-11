@@ -3,19 +3,18 @@ import re
 import scrapy
 
 from pep_parse.items import PepParseItem
-from pep_parse.settings import PEP_NUMBER_NAME
+from pep_parse.settings import PEP_NUMBER_NAME, ALLOWED_DOMAINS
 
 
 class PepSpider(scrapy.Spider):
     name = 'pep'
-    allowed_domains = ['peps.python.org']
-    start_urls = ['https://peps.python.org/']
+    allowed_domains = [ALLOWED_DOMAINS]
+    start_urls = [f'https://{ALLOWED_DOMAINS}/']
 
     def parse(self, response):
         pep_list = response.css('section#numerical-index a::attr(href)')
 
         for pep in pep_list:
-            print('Ссылка:', pep)
             yield response.follow(pep, callback=self.parse_pep)
 
     def parse_pep(self, response):

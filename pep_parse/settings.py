@@ -21,3 +21,4 @@ FILE_NAME = 'status_summary_{}.csv'.format(
 ITEM_PIPELINES = {
     'pep_parse.pipelines.PepParsePipeline': 300,
 }
+ALLOWED_DOMAINS = 'peps.python.org'
